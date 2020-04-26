@@ -14,4 +14,8 @@ resource "azurerm_kubernetes_cluster" "aks_datadog" {
     client_id     = var.service_principal.client_id
     client_secret = var.service_principal.client_secret
   }
+
+  tags = {
+    Environment = "Test"
+  }
 }
