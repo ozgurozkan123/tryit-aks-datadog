@@ -23,10 +23,8 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                {
-                  echo service_principal_client_id = \"$SERVICE_PRINCIPAL_CLIENT_ID\" \
-                  echo service_principal_client_secret = \"$SERVICE_PRINCIPAL_CLIENT_SECRET\"
-                } > terraform.tfvars
+                echo 'service_principal_client_id = "$SERVICE_PRINCIPAL_CLIENT_ID"' >> terraform.tfvars
+                echo 'service_principal_client_secret = "$SERVICE_PRINCIPAL_CLIENT_SECRET"' >> terraform.tfvars
           - publish: ./terraform.tfvars
             artifact: 'tfvars'
             displayName: Publish generated tfvars file
