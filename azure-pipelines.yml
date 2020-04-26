@@ -16,6 +16,7 @@ stages:
       - job: ValidateAndPlan
         steps:
           - task: TerraformTaskV1@0
+            displayName: Init
             inputs:
               provider: 'azurerm'
               command: 'init'
@@ -24,3 +25,18 @@ stages:
               backendAzureRmStorageAccountName: 'earthterraform'
               backendAzureRmContainerName: 'terraform'
               backendAzureRmKey: 'terraform.tfstate'
+          - task: TerraformTaskV1@0
+            displayName: Validate
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+          - download: current
+            artifact: tfvars
+            displayName: Download tfvars file
+          - task: TerraformTaskV1@0
+            displayName: Plan
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              commandOptions: '-out=tfplan -input=false'
+              environmentServiceNameAzureRM: $(backendServiceAzureRM)
