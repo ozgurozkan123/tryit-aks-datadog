@@ -37,3 +37,6 @@ stages:
               command: 'plan'
               commandOptions: '-out=tfplan -input=false'
               environmentServiceNameAzureRM: $(backendServiceAzureRM)
+          - publish: ./
+            artifact: terraform-archive
+            displayName: Publish Terraform archive
