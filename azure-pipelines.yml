@@ -10,6 +10,22 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
+  - stage: GenerateTerraformVarsFile
+    displayName: Generate tfvars file
+    jobs:
+      - job: GenerateTerraformVarsFile
+        steps:
+          - task: Bash@3
+            displayName: Generate tfvars file
+            env:
+              service_principal_client_secret: $(service_principal_client_secret)
+            inputs:
+              targetType: 'inline'
+              script: |
+                echo service_principal_client_secret = "$service_principal_client_secret" > terraform.tfvars
+          - publish: ./terraform.tfvars
+            artifact: 'tfvars'
+            displayName: Publish generated tfvars file
   - stage: ValidateAndPlan
     displayName: Validate and Plan
     jobs:
@@ -30,12 +46,15 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'validate'
+          - download: current
+            artifact: 'tfvars'
+            displayName: Download generated tfvars file
           - task: TerraformTaskV1@0
             displayName: Plan
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              commandOptions: '-out=tfplan -input=false'
+              commandOptions: '-out=tfplan -input=false -var-file=$(Pipeline.Workspace)/tfvars/terraform.tfvars'
               environmentServiceNameAzureRM: $(backendServiceAzureRM)
           - publish: ./
             artifact: 'terraform-archive'
@@ -58,9 +77,13 @@ stages:
             inputs:
               targetType: 'inline'
               script: 'chmod -R 755 /home/vsts/work/1/s/.terraform/plugins/linux_amd64'
+          - download: current
+            artifact: 'tfvars'
+            displayName: Download generated tfvars file
           - task: TerraformTaskV1@0
             displayName: Apply
             inputs:
               provider: 'azurerm'
               command: 'apply'
+              commandOptions: '-var-file=$(Pipeline.Workspace)/tfvars/terraform.tfvars'
               environmentServiceNameAzureRM: $(backendServiceAzureRM)
