@@ -53,6 +53,11 @@ stages:
             inputs:
               artifactName: 'terraform-archive'
               path: $(Build.SourcesDirectory)
+          - task: Bash@3
+            displayName: Grant read permission to terraform files
+            inputs:
+              targetType: 'inline'
+              script: 'chmod -R 755 /home/vsts/work/1/s/.terraform/plugins/linux_amd64'
           - task: TerraformTaskV1@0
             displayName: Apply
             inputs:
