@@ -38,5 +38,24 @@ stages:
               commandOptions: '-out=tfplan -input=false'
               environmentServiceNameAzureRM: $(backendServiceAzureRM)
           - publish: ./
-            artifact: terraform-archive
+            artifact: 'terraform-archive'
             displayName: Publish Terraform archive
+  - stage: Apply
+    displayName: Apply
+    jobs:
+      - deployment: HostedVs2017
+        environment: tryit-aks-datadog
+      - job: Apply
+        steps:
+          - checkout: none
+          - task: DownloadPipelineArtifact@2
+            displayName: Download Terraform archive
+            inputs:
+              artifactName: 'terraform-archive'
+              path: $(Build.SourcesDirectory)
+          - task: TerraformTaskV1@0
+            displayName: Apply
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: $(backendServiceAzureRM)
