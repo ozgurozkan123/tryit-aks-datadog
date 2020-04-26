@@ -9,13 +9,18 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - task: TerraformTaskV1@0
-    inputs:
-      provider: 'azurerm'
-      command: 'init'
-      backendServiceArm: $(backendServiceAzureRM)
-      backendAzureRmResourceGroupName: 'earth-azure-devops'
-      backendAzureRmStorageAccountName: 'earthterraform'
-      backendAzureRmContainerName: 'terraform'
-      backendAzureRmKey: 'terraform.tfstate'
+stages:
+  - stage: ValidateAndPlan
+    displayName: Validate and Plan
+    jobs:
+      - job: ValidateAndPlan
+        steps:
+          - task: TerraformTaskV1@0
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: $(backendServiceAzureRM)
+              backendAzureRmResourceGroupName: 'earth-azure-devops'
+              backendAzureRmStorageAccountName: 'earthterraform'
+              backendAzureRmContainerName: 'terraform'
+              backendAzureRmKey: 'terraform.tfstate'
