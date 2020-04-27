@@ -27,8 +27,8 @@ stages:
               script: |
                 echo service_principal_client_id = \"$SERVICE_PRINCIPAL_CLIENT_ID\" >> terraform.tfvars
                 echo service_principal_client_secret = \"$SERVICE_PRINCIPAL_CLIENT_SECRET\" >> terraform.tfvars
-                echo datadog_api_key = \"DATADOG_API_KEY\" >> terraform.tfvars
-                echo datadog_app_key = \"DATADOG_APP_KEY\" >> terraform.tfvars
+                echo datadog_api_key = \"$DATADOG_API_KEY\" >> terraform.tfvars
+                echo datadog_app_key = \"$DATADOG_APP_KEY\" >> terraform.tfvars
           - publish: ./terraform.tfvars
             artifact: 'tfvars'
             displayName: Publish generated tfvars file
