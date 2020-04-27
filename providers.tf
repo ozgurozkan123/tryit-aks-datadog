@@ -6,9 +6,9 @@ provider "azurerm" {
 provider "kubernetes" {
   host = module.aks.aks_kube_config.host
 
-  client_certificate     = base64encode(module.aks.aks_kube_config.client_certificate)
-  client_key             = base64encode(module.aks.aks_kube_config.client_key)
-  cluster_ca_certificate = base64encode(module.aks.aks_kube_config.cluster_ca_certificate)
+  client_certificate     = base64decode(module.aks.aks_kube_config.client_certificate)
+  client_key             = base64decode(module.aks.aks_kube_config.client_key)
+  cluster_ca_certificate = base64decode(module.aks.aks_kube_config.cluster_ca_certificate)
   load_config_file       = false
   version                = "=1.10.0"
 }
@@ -17,9 +17,9 @@ provider "helm" {
   kubernetes {
     host = module.aks.aks_kube_config.host
 
-    client_certificate     = base64encode(module.aks.aks_kube_config.client_certificate)
-    client_key             = base64encode(module.aks.aks_kube_config.client_key)
-    cluster_ca_certificate = base64encode(module.aks.aks_kube_config.cluster_ca_certificate)
+    client_certificate     = base64decode(module.aks.aks_kube_config.client_certificate)
+    client_key             = base64decode(module.aks.aks_kube_config.client_key)
+    cluster_ca_certificate = base64decode(module.aks.aks_kube_config.cluster_ca_certificate)
     load_config_file       = false
   }
 }
