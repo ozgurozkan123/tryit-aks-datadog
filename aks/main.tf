@@ -3,7 +3,7 @@ resource "azurerm_kubernetes_cluster" "aks_datadog" {
   location            = var.resource_group.location
   name                = var.aks_spec.name
   resource_group_name = var.resource_group.name
-  kubernetes_version = var.aks_spec.kubernetes_version
+  kubernetes_version  = var.aks_spec.kubernetes_version
 
   default_node_pool {
     name       = var.aks_spec.default_node_pool.name
