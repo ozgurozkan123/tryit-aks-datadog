@@ -32,6 +32,15 @@ resource "kubernetes_namespace" "datadog" {
   }
 }
 
+module "datadog-agent" {
+  source = "./datadog"
+  spec = {
+    namespace = kubernetes_namespace.datadog.metadata.0.name
+    api_key   = var.datadog_api_key
+    app_key   = var.datadog_app_key
+  }
+}
+
 terraform {
   backend "azurerm" {}
 }

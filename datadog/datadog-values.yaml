@@ -1,0 +1,17 @@
+datadog:
+  logs:
+    enabled: true
+    containerCollectAll: true
+  apm:
+    enabled: true
+  tags:
+    - env:test
+  podLabelsAsTags:
+    app.kubernetes.io/name: app
+  env:
+    - name: DD_CHECKS_TAG_CARDINALITY
+      value: orchestrator
+clusterAgent:
+  enabled: true
+  metricsProvider:
+    enabled: true
