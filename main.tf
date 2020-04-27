@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "resource_group" {
   name     = "rg-aks-datadog"
 
   tags = {
-    Environment = "Test"
+    ENV = "TEST"
   }
 }
 

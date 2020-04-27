@@ -16,6 +16,6 @@ resource "azurerm_kubernetes_cluster" "aks_datadog" {
   }
 
   tags = {
-    Environment = "Test"
+    ENV = "TEST"
   }
 }
