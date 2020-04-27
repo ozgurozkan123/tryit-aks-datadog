@@ -26,6 +26,12 @@ module "aks" {
   }
 }
 
+resource "kubernetes_namespace" "datadog" {
+  metadata {
+    name = "datadog"
+  }
+}
+
 terraform {
   backend "azurerm" {}
 }
