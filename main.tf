@@ -13,7 +13,7 @@ module "aks" {
   aks_spec = {
     name               = "Aks-Earth"
     dns_prefix         = "aks-earth"
-    kubernetes_version = "1.15.10"
+    kubernetes_version = "1.18.14"
     default_node_pool = {
       name       = "default"
       node_count = 3
