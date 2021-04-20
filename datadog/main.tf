@@ -8,7 +8,7 @@ resource "helm_release" "datadog-agent" {
   chart      = "datadog"
   repository = "https://helm.datadoghq.com"
   version    = "2.10.1"
-  namespace  = kubernetes_namespace.datadog.id
+  namespace  = "datadog"
 
 
   set {
