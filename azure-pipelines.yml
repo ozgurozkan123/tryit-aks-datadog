@@ -43,10 +43,10 @@ stages:
               provider: 'azurerm'
               command: 'init'
               backendServiceArm: $(backendServiceAzureRM)
-              backendAzureRmResourceGroupName: 'earth-azure-devops'
-              backendAzureRmStorageAccountName: 'earthterraform'
-              backendAzureRmContainerName: 'terraform'
-              backendAzureRmKey: 'terraform.tfstate'
+              backendAzureRmResourceGroupName: 'pollinate-ozgur-terraform-rg'
+              backendAzureRmStorageAccountName: 'pollinateozgurtfstate'
+              backendAzureRmContainerName: 'pollinate-ozgur-tfstate'
+              backendAzureRmKey: 'aks.tfstate'
           - task: TerraformTaskV1@0
             displayName: Validate
             inputs:
