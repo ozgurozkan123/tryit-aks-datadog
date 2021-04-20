@@ -20,7 +20,9 @@ provider "helm" {
     client_certificate     = base64decode(module.aks.aks_kube_config.client_certificate)
     client_key             = base64decode(module.aks.aks_kube_config.client_key)
     cluster_ca_certificate = base64decode(module.aks.aks_kube_config.cluster_ca_certificate)
-   version                = "=1.3.1"
+  
    
   }
+  load_config_file       = false
+   version                = "=1.3.1"
 }
