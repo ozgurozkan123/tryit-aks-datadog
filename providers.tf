@@ -23,6 +23,6 @@ provider "helm" {
   
    
   }
-  load_config_file       = false
+ 
    version                = "=1.3.1"
 }
