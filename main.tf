@@ -16,8 +16,8 @@ module "aks" {
     kubernetes_version = "1.18.14"
     default_node_pool = {
       name       = "default"
-      node_count = 3
-      vm_size    = "Standard_D2_V2"
+      node_count = 2
+      vm_size    = "Standard_D1_v2"
     }
   }
   service_principal = {
