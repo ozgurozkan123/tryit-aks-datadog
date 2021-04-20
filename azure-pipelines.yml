@@ -82,7 +82,7 @@ stages:
             displayName: Grant read permission to terraform files
             inputs:
               targetType: 'inline'
-              script: 'chmod -R 755 /home/vsts/work/1/s/.terraform/plugins/linux_amd64'
+              script: 'chmod -R 755 /home/vsts/work/1/s/.terraform/providers'
           - download: current
             artifact: 'tfvars'
             displayName: Download generated tfvars file
