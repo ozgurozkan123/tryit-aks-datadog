@@ -1,5 +1,7 @@
 terraform {
+
   required_providers {
+
     datadog = {
       source  = "datadog/datadog"
       version = "~> 2.22.0"
@@ -14,5 +16,9 @@ terraform {
     }
   }
 
+
   required_version = "~> 0.14.7"
+}
+provider azurerm {
+  features {}
 }
