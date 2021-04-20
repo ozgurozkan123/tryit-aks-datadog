@@ -1,6 +1,6 @@
 data "helm_repository" "stable" {
   name = "stable"
-  url  = "https://charts.helm.sh/stable"
+  url  = "https://charts.helm.sh"
 }
 
 resource "helm_release" "datadog-agent" {
