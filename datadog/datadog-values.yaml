@@ -13,5 +13,7 @@ datadog:
       value: orchestrator
 clusterAgent:
   enabled: true
+  image:
+    repository: datadog/cluster-agent
   metricsProvider:
     enabled: true

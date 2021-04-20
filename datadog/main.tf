@@ -4,10 +4,12 @@ data "helm_repository" "stable" {
 }
 
 resource "helm_release" "datadog-agent" {
-  chart      = "datadog"
   name       = "datadog-agent"
-  repository = data.helm_repository.stable.metadata.0.name
-  namespace  = var.spec.namespace
+  chart      = "datadog"
+  repository = "https://helm.datadoghq.com"
+  version    = "2.10.1"
+  namespace  = datadogid
+
 
   set {
     name  = "datadog.apiKey"
@@ -19,9 +21,60 @@ resource "helm_release" "datadog-agent" {
     value = var.spec.app_key
   }
 
-  values = [
-    file("${abspath(path.module)}/datadog-values.yaml")
-  ]
 
-  force_update = true
+
+  set {
+    name  = "datadog.logs.enabled"
+    value = true
+  }
+
+  set {
+    name  = "datadog.logs.containerCollectAll"
+    value = true
+  }
+
+  set {
+    name  = "datadog.leaderElection"
+    value = true
+  }
+
+  set {
+    name  = "datadog.collectEvents"
+    value = true
+  }
+
+  set {
+    name  = "clusterAgent.enabled"
+    value = true
+  }
+
+  set {
+    name  = "clusterAgent.metricsProvider.enabled"
+    value = true
+  }
+
+  set {
+    name  = "networkMonitoring.enabled"
+    value = true
+  }
+
+  set {
+    name  = "systemProbe.enableTCPQueueLength"
+    value = true
+  }
+
+  set {
+    name  = "systemProbe.enableOOMKill"
+    value = true
+  }
+
+  set {
+    name  = "securityAgent.runtime.enabled"
+    value = true
+  }
+
+  set {
+    name  = "datadog.hostVolumeMountPropagation"
+    value = "HostToContainer"
+  }
 }

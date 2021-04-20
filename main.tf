@@ -31,6 +31,58 @@ resource "kubernetes_namespace" "datadog" {
     name = "datadog"
   }
 }
+resource "kubernetes_deployment" "datadog" {
+  metadata {
+    name      = "datadog-app"
+    namespace = kubernetes_namespace.datadog.id
+    labels = {
+      app = "datadog-app"
+    }
+  }
+
+  spec {
+    replicas = 3
+
+    selector {
+      match_labels = {
+        app = "datadog-app"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "datadog-app"
+        }
+      }
+
+      spec {
+        container {
+          image = "onlydole/beacon:datadog"
+          name  = "datadog-app"
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service" "beacon" {
+  metadata {
+    name      = "datadog-app"
+    namespace = kubernetes_namespace.datadog.id
+  }
+  spec {
+    selector = {
+      app = kubernetes_deployment.datadog.metadata[0].labels.app
+    }
+    port {
+      node_port   = 30201
+      port        = 8080
+      target_port = 80
+    }
+    type = "NodePort"
+  }
+}
 
 module "datadog-agent" {
   source = "./datadog"
